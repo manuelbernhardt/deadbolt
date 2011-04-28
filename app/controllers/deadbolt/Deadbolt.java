@@ -15,6 +15,11 @@
  */
 package controllers.deadbolt;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import models.deadbolt.AccessResult;
 import models.deadbolt.ExternalizedRestriction;
 import models.deadbolt.ExternalizedRestrictions;
@@ -26,11 +31,6 @@ import play.exceptions.ConfigurationException;
 import play.mvc.Before;
 import play.mvc.Controller;
 import play.mvc.Util;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Checks authorisation based on role names.
@@ -112,7 +112,7 @@ public class Deadbolt extends Controller
             else
             {
                 String[] names = restrictedResource.name();
-                AccessResult accessResult = restrictedResourcesHandler.checkAccess(names == null ? Collections.<String>emptyList() : Arrays.asList(names));
+                AccessResult accessResult = restrictedResourcesHandler.checkAccess(names == null ? Collections.<String>emptyList() : Arrays.asList(names), roleHolder);
                 switch (accessResult)
                 {
                     case DENIED:
@@ -330,7 +330,7 @@ public class Deadbolt extends Controller
         }
         else
         {
-            AccessResult accessResult = restrictedResourcesHandler.checkAccess(resourceKeys);
+            AccessResult accessResult = restrictedResourcesHandler.checkAccess(resourceKeys, DEADBOLT_HANDLER.getRoleHolder());
             switch (accessResult)
             {
                 case ALLOWED:

@@ -15,9 +15,10 @@
  */
 package controllers.deadbolt;
 
-import models.deadbolt.AccessResult;
-
 import java.util.List;
+
+import models.deadbolt.AccessResult;
+import models.deadbolt.RoleHolder;
 
 /**
  * @author Steve Chaloner (steve@objectify.be)
@@ -36,9 +37,11 @@ public interface RestrictedResourcesHandler
      * access will be allowed.</li>
      * </ul>
      *
+     *
      * @param resourceNames the names of the resource
+     * @param roleHolder the RoleHolder to check the dynamic restriction against
      * @return {@link AccessResult#ALLOWED} if access is permitted.  {@link AccessResult#DENIED} if access is denied.
      * {@link AccessResult#NOT_SPECIFIED} if access is not specified.
      */
-    AccessResult checkAccess(List<String> resourceNames);
+    AccessResult checkAccess(List<String> resourceNames, RoleHolder roleHolder);
 }
